@@ -307,9 +307,11 @@ const APP_CONFIG={
     vendorSpecific:'<span class="active">1 ERP Transformation Journey</span><span>2 Target ERP</span><span>3 Profile</span><span>4 Vendor Scope</span><span>5 Healthcare Ecosystem</span><span>6 Readiness</span><span>7 Executive Report</span><span>8 Submit Assessment</span>'
   },
   weightProfiles:{
-    default:[7,8,7,8,7,6,8,7,5,7,5,8,3,5,9],
+    default:[3,3,5,5,3,3,10,10,8,10,9,9,7,8,7],
     early:[12,14,11,10,12,8,6,5,3,3,3,3,4,3,3],
-    selection:[10,11,9,8,9,9,8,6,4,5,4,5,3,4,5]
+    selection:[10,11,9,8,9,9,8,6,4,5,4,5,3,4,5],
+    planning:[3,3,5,5,10,12,11,10,6,10,5,5,5,5,5],
+    implementation:[3,3,5,5,3,3,10,10,8,10,9,9,7,8,7]
   },
   radarDimensions:[
     {label:"Strategy & Business Case",sections:[0,1,2]},
@@ -365,7 +367,7 @@ function sectionMax(i){return sections[i].questions.length}
 function normalizedScore(i,count){return (count/sectionMax(i))*5}
 function sectionPercent(i,count){return Math.round((count/sectionMax(i))*100)}
 
-function weightProfile(){if(['Discovery','Business Case Creation'].includes(selectedJourneyStage))return APP_CONFIG.weightProfiles.early;if(selectedJourneyStage==='Vendor Selection')return APP_CONFIG.weightProfiles.selection;return APP_CONFIG.weightProfiles.default}
+function weightProfile(){if(['Discovery','Business Case Creation'].includes(selectedJourneyStage))return APP_CONFIG.weightProfiles.early;if(selectedJourneyStage==='Vendor Selection')return APP_CONFIG.weightProfiles.selection;if(selectedJourneyStage==='Implementation Planning')return APP_CONFIG.weightProfiles.planning;if(selectedJourneyStage==='Implementation')return APP_CONFIG.weightProfiles.implementation;return APP_CONFIG.weightProfiles.default}
 function effectiveWeight(i){return weightProfile()[i]??sections[i].weight}
 function selectedModules(){return [...document.querySelectorAll('.moduleCheck:checked')].map(x=>({name:x.dataset.name,kind:x.dataset.kind,group:+x.dataset.group}))}
 function setAllModules(checked){document.querySelectorAll('.moduleCheck').forEach(x=>x.checked=checked);calculate()}
